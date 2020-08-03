@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container py-4">
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<h4 class="card-title">
+					<a class="btn btn-primary btn-xs" th:href="@{'/factura/form/'+ ${cliente.get().id}}" th:text="'Crear factura'"></a>
+				</h4>
+				<img th:if="${!#strings.isEmpty (cliente.get().foto)}"
+					class="img-thumbnail rounded float-left" style="max-width: 15%;"
+					th:src="@{'/uploads/'+ ${cliente.foto}}"
+					th:alt="${cliente.get().foto}" />
+				<div class="row lg-8">
+					<ul class="li-group">
+						<li class="list-group-item" th:text="${cliente.get().nombre}"></li>
+						<li class="list-group-item" th:text="${cliente.get().apellido}"></li>
+						<li class="list-group-item" th:text="${cliente.get().email}"></li>
+						<li class="list-group-item" th:text="${cliente.get().createAt}"></li>
+					</ul>
+					<!-- <div class="container alert alert-info my-4 "></div> -->
+						
+				<!-- 	<div class="alert alert-info my-4"  >
+					</div> -->
+					<table  class="table table-bordered table-striped my-4">
+						<thead class="thead inverse">
+							<tr>
+								<th>Folio</th>
+								<th>Descripcion</th>
+								<th>Fecha</th>
+								<th>Total</th>
+								<th>Ver </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="factura: ${cliente.get().facturas}">
+								<td th:text="${factura.id}"></td>
+								<td th:text="${factura.descripcion}"></td>
+								<td th:text="${factura.createAt}"></td>
+								<!-- <td th:text="${factura.total}"></td>  -->
+								<td><a class="btn btn-primary btn-xs" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="'Detalle'"></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
